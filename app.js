@@ -1,28 +1,25 @@
-function getDogImage(num) {
-    fetch('https://dog.ceo/api/breeds/image/random' + num)
+function getDogImage() {
+     fetch('https://dog.ceo/api/breeds/image/random')
     .then(response => response.json())
     .then(responseJson => displayResults(responseJson))
     .catch(error => alert('Something went wrong. Try again later.'));
 }
 
 function displayResults(responseJson) {
-  for (i = 0; i < responseJson.message.length; i ++) {
-    $('.pictures').append('<img src=\'' + responseJson.message[i] + '>');
+  let num = Math.floor(Math.random()*10);
+  console.log(num);
+  for (i = 0; i < num; i ++) {
+    $('.images').append(`<img src="${responseJson.message}" class="images">`);
   }
-  $('.images').removeClass('hidden');
 }
 
 function handleSubmit() {
   $('form').submit(function(event){
     event.preventDefault();
     event.stopPropagation();
-    let num = $('#dogNumber').val();
-    if (num > 50) {
-      alert('Too many dogs!');
-      return;
-    }
-    $('.pictures').empty();
-    getDogImage(num);
+    $('.images').empty();
+    
+    getDogImage();
   });
 }
 
